@@ -19,8 +19,24 @@
     justify-content: flex-end;
 
     .nav-link {
+      display: flex;
+      flex-direction: column;
       padding: 10px 15px;
       cursor: pointer;
+      transition: all .5s;
+
+      .nav-link-border {
+        width: 0%;
+        background-color: black;
+        height: 1px;
+        transition: all .3s;
+      }
+
+      &:hover {
+        .nav-link-border {
+          width: 100%;
+        }
+      }
     }
   }
 }

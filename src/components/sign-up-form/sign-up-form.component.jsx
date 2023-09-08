@@ -4,7 +4,7 @@ import {
   createUserDocFromAuth,
 } from "../../utils/firebase.utils";
 import FormInput from "../form-input/form-input.component";
-import './sign-up-form.styles.scss';
+import "./sign-up-form.styles.scss";
 import Button from "../button/button.components";
 
 const initialForm = {
@@ -14,8 +14,13 @@ const initialForm = {
   confirmPassword: "",
 };
 
+const initialErrors = {
+  confirmPasswordError: "",
+};
+
 const SignUpForm = () => {
   const [signUpForm, setSignUpform] = useState(initialForm);
+  const [errors, setErrors] = useState(initialForm);
   const { name, email, password, confirmPassword } = signUpForm;
 
   const resetFormFields = () => {
@@ -24,7 +29,7 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
-      alert("passwords do not match");
+      setErrors({ confirmPassword: "passwords do not match" });
       return;
     }
     try {
@@ -36,6 +41,7 @@ const SignUpForm = () => {
       if (response) {
         await createUserDocFromAuth(response.user, { displayName: name });
         resetFormFields();
+        setErrors(initialErrors);
       }
     } catch (err) {
       console.log(err.message);
@@ -92,6 +98,7 @@ const SignUpForm = () => {
             name: "confirmPassword",
             value: confirmPassword,
           }}
+          error={errors.confirmPassword}
         />
         <Button type="submit">Sign up</Button>
       </form>

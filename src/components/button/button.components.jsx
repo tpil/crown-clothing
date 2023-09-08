@@ -1,4 +1,5 @@
-import './button.styles.scss';
+import "./button.styles.scss";
+import { ReactComponent as GoogleLogo } from "../../assets/google-icon.svg";
 const BUTTON_TYPES = {
   google: "google-sign-in",
   inverted: "inverted",
@@ -10,6 +11,7 @@ const Button = ({ children, buttonType, ...otherProps }) => {
       {...otherProps}
     >
       {children}
+      <div className="google-logo"><GoogleLogo /></div>
     </button>
   );
 };

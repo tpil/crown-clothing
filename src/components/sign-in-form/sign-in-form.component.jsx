@@ -13,11 +13,17 @@ const initialForm = {
   password: "",
 };
 
+const initialErrors = {
+  emailError: '',
+  passwordError: ''
+};
+
 const SignInForm = () => {
   const [signinForm, setSigninForm] = useState(initialForm);
+  const [errors, setErrors] = useState(initialErrors);
   const { email, password } = signinForm;
 
-  console.log(signinForm);
+  console.log(signinForm, errors);
 
   const resetFormFields = () => {
     setSigninForm(initialForm);
@@ -32,10 +38,10 @@ const SignInForm = () => {
     } catch (err) {
       switch (err.code) {
         case 'auth/wrong-password':
-          alert('incorrect password for email');
+          setErrors({emailError: '', passwordError:'incorrect password for email'});
           break;
         case 'auth/user-not-found':
-          alert('no user associated with this email');
+          setErrors({passwordError: '', emailError:'no user associated with this email'});
           break;
         default:
           console.log(err);
@@ -70,6 +76,7 @@ const SignInForm = () => {
             name: "email",
             value: email,
           }}
+          error={errors.emailError}
         />
         <FormInput
           label="password"
@@ -80,11 +87,12 @@ const SignInForm = () => {
             name: "password",
             value: password,
           }}
+          error={errors.passwordError}
         />
         <div className="buttons-container">
           <Button type="submit">Sign in</Button>
           <Button type="button" buttonType="google" onClick={signinWithGoogle}>
-            Sign in with google
+           sign in with
           </Button>
         </div>
       </form>
