@@ -1,7 +1,11 @@
+@import "../../assets/styles/breakpoints.scss";
+
 .sign-in-container {
   display: flex;
   flex-direction: column;
-  width: 380px;
+  width: 100%;
+  margin-right: 0;
+  
 
   h2 {
     margin: 10px 0;
@@ -10,5 +14,9 @@
   .buttons-container {
     display: flex;
     justify-content: space-between;
+  }
+  @media (min-width: $tablet-breakpoint) {
+    margin: 10px;
+    width: 400px;
   }
 }
