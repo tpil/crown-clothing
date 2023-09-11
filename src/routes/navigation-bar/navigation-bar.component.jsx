@@ -4,14 +4,11 @@ import { UserContext } from "../../contexts/user.context";
 import { signOutUser } from "../../utils/firebase.utils";
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import "./navigation-bar.styles.scss";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component";
 
 const Navigation = () => {
-  const { user, setUser } = useContext(UserContext);
-
-  const signOutHandler = async () => {
-    await signOutUser();
-    setUser(null);
-  };
+  const { user } = useContext(UserContext);
 
   return (
     <Fragment>
@@ -26,7 +23,7 @@ const Navigation = () => {
             SHOP<span className="nav-link-border"></span>
           </Link>
           {user ? (
-            <span className="nav-link" onClick={signOutHandler}>
+            <span className="nav-link" onClick={signOutUser}>
               SIGN OUT<span className="nav-link-border"></span>
             </span>
           ) : (
@@ -34,7 +31,11 @@ const Navigation = () => {
               SIGN IN<span className="nav-link-border"></span>
             </Link>
           )}
+          <CartIcon />
         </div>
+      </div>
+      <div className="nav-dropdown">
+        <CartDropDown />
       </div>
       <Outlet />
     </Fragment>

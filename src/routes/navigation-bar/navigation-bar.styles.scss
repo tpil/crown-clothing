@@ -5,6 +5,7 @@
   display: flex;
   justify-content: space-between;
   margin: 10px;
+  flex: 1 1 0;
 
   .logo-container {
     display: flex;
@@ -21,7 +22,7 @@
     .nav-link {
       display: flex;
       flex-direction: column;
-      padding: 10px 15px;
+      padding: 10px;
       cursor: pointer;
       transition: all .5s;
 
@@ -39,8 +40,13 @@
       }
     }
   }
-
-  @media (min-width: $tablet-breakpoint) {
-    margin: 30px;
-  }
+}
+.nav-dropdown {
+  height: 0;
+  position: relative;
+  z-index: 5;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
 }

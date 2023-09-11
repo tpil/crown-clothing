@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import {
   signInWithUserEmailAndPassword,
   signInWithGooglePopup,
+  signOutUser
 } from "../../utils/firebase.utils";
 import { UserContext } from "../../contexts/user.context";
 import FormInput from "../form-input/form-input.component";
@@ -19,11 +20,10 @@ const initialErrors = {
 };
 
 const SignInForm = () => {
+
   const [signinForm, setSigninForm] = useState(initialForm);
   const [errors, setErrors] = useState(initialErrors);
   const { email, password } = signinForm;
-
-  const { setUser } = useContext(UserContext);
 
   //signin with redirect methodz
   // useEffect(() => {
@@ -36,9 +36,14 @@ const SignInForm = () => {
   //   fechRedirectResult();
   // }, []);
 
-  console.log(signinForm);
+
   const resetFormFields = () => {
     setSigninForm(initialForm);
+  };
+
+  const signinWithGoogle = async () => {
+    const response = await signInWithGooglePopup();
+    if (response) resetFormFields();
   };
 
   const signinWithEmail = async (event) => {
@@ -47,7 +52,6 @@ const SignInForm = () => {
     try {
       const res = await signInWithUserEmailAndPassword(email, password);
       resetFormFields();
-      setUser(res.user);
     } catch (err) {
       switch (err.code) {
         case "auth/wrong-password":
@@ -68,11 +72,6 @@ const SignInForm = () => {
     }
   };
 
-  const signinWithGoogle = async () => {
-    const response = await signInWithGooglePopup();
-    if (response) resetFormFields();
-    setUser(response.user);
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
