@@ -1,0 +1,16 @@
+@import "../../assets/styles/breakpoints.scss";
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10px;
+  row-gap: 50px;
+  margin: 10px;
+ 
+
+  @media (min-width: $phone-breakpoint) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: $tablet-breakpoint) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

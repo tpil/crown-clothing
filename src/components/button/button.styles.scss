@@ -1,6 +1,5 @@
 .button-container {
   min-width: 165px;
-  max-width: 200px;
   height: 50px;
   letter-spacing: 0.5px;
   padding: 0 35px;
@@ -11,12 +10,16 @@
   text-transform: uppercase;
   font-family: "Open Sans Condensed";
   font-weight: bolder;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: background-color .5s;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
 
   &:hover {
     background-color: white;
@@ -25,25 +28,17 @@
   }
 
   &.google-sign-in {
-    background-color: #4285f4;
-
+   
     &:hover {
       color: #4285f4;
       background-color: white;
       border: 1px solid #4285f4;
-
-      .google-logo {
-        background-color: transparent;
-      }
     }
 
     .google-logo {
       display: flex;
       align-items: center;
-      background-color: black;
-      border-radius: 50%;
-      padding: 5px;
-      transition: background-color .3s;
+      margin-left: 5px;
       svg {
         width: 25px;
         height: 25px;

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   signInWithUserEmailAndPassword,
-  createUserDocFromAuth,
   signInWithGooglePopup,
+  signOutUser
 } from "../../utils/firebase.utils";
+import { UserContext } from "../../contexts/user.context";
 import FormInput from "../form-input/form-input.component";
 import "./sign-in-form.styles.scss";
 import Button from "../button/button.components";
@@ -14,34 +15,56 @@ const initialForm = {
 };
 
 const initialErrors = {
-  emailError: '',
-  passwordError: ''
+  emailError: "",
+  passwordError: "",
 };
 
 const SignInForm = () => {
+
   const [signinForm, setSigninForm] = useState(initialForm);
   const [errors, setErrors] = useState(initialErrors);
   const { email, password } = signinForm;
 
-  console.log(signinForm, errors);
+  //signin with redirect methodz
+  // useEffect(() => {
+  //   const fechRedirectResult = async () => {
+  //     const response = await getRedirectResult(auth);
+  //     if (response) {
+  //       const userDok = await createUserDocFromAuth(response.user);
+  //     }
+  //   };
+  //   fechRedirectResult();
+  // }, []);
+
 
   const resetFormFields = () => {
     setSigninForm(initialForm);
   };
 
+  const signinWithGoogle = async () => {
+    const response = await signInWithGooglePopup();
+    if (response) resetFormFields();
+  };
+
   const signinWithEmail = async (event) => {
-    console.log('sign with email');
+    console.log("sign with email");
     event.preventDefault();
     try {
       const res = await signInWithUserEmailAndPassword(email, password);
-      if (res) resetFormFields();
+      resetFormFields();
     } catch (err) {
       switch (err.code) {
-        case 'auth/wrong-password':
-          setErrors({emailError: '', passwordError:'incorrect password for email'});
+        case "auth/wrong-password":
+          setErrors({
+            emailError: "",
+            passwordError: "incorrect password for email",
+          });
           break;
-        case 'auth/user-not-found':
-          setErrors({passwordError: '', emailError:'no user associated with this email'});
+        case "auth/user-not-found":
+          setErrors({
+            passwordError: "",
+            emailError: "no user associated with this email",
+          });
           break;
         default:
           console.log(err);
@@ -49,13 +72,6 @@ const SignInForm = () => {
     }
   };
 
-  const signinWithGoogle = async () => {
-    
-    const response = await signInWithGooglePopup();
-    console.log(response);
-    await createUserDocFromAuth(response.user);
-    if (response) resetFormFields();
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -92,7 +108,7 @@ const SignInForm = () => {
         <div className="buttons-container">
           <Button type="submit">Sign in</Button>
           <Button type="button" buttonType="google" onClick={signinWithGoogle}>
-           sign in with
+            continue with
           </Button>
         </div>
       </form>

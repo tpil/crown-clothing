@@ -1,18 +1,19 @@
+@import "../../assets/styles/breakpoints.scss";
+
 .navigation {
   height: 70px;
-  width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin: 10px;
+  flex: 1 1 0;
 
   .logo-container {
-    height: 100%;
-    width: 70px;
-    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .nav-links-container {
-    width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -21,7 +22,7 @@
     .nav-link {
       display: flex;
       flex-direction: column;
-      padding: 10px 15px;
+      padding: 10px;
       cursor: pointer;
       transition: all .5s;
 
@@ -39,4 +40,13 @@
       }
     }
   }
+}
+.nav-dropdown {
+  height: 0;
+  position: relative;
+  z-index: 5;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
 }
