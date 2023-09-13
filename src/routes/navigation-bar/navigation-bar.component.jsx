@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { Fragment, useContext } from "react";
 import { UserContext } from "../../contexts/user.context";
+import { CartContext } from "../../contexts/cart.context";
 import { signOutUser } from "../../utils/firebase.utils";
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import "./navigation-bar.styles.scss";
@@ -9,7 +10,11 @@ import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component
 
 const Navigation = () => {
   const { user } = useContext(UserContext);
+  const { displayCart, setCartVisibility } = useContext(CartContext);
 
+  const togglecart = () => {
+    setCartVisibility(!displayCart);
+  };
   return (
     <Fragment>
       <div className="navigation">
@@ -31,12 +36,10 @@ const Navigation = () => {
               SIGN IN<span className="nav-link-border"></span>
             </Link>
           )}
-          <CartIcon />
+          <span onClick={togglecart}><CartIcon  /></span>
         </div>
       </div>
-      <div className="nav-dropdown">
-        <CartDropDown />
-      </div>
+      <div className="nav-dropdown">{displayCart && <CartDropDown />}</div>
       <Outlet />
     </Fragment>
   );
