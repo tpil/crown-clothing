@@ -10,7 +10,16 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,16 +42,18 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleProvider);
 export const signInWithUserEmailAndPassword = async (email, password) => {
- if (!email || !password) return;
- return await signInWithEmailAndPassword(auth, email, password);
-}
+  if (!email || !password) return;
+  return await signInWithEmailAndPassword(auth, email, password);
+};
 
 // signInWithEmailAndPassword(auth, email, password)
 //   .then((userCredential) => {
-//     // Signed in 
+//     // Signed in
 //     const user = userCredential.user;
 //     // ...
 //   })
@@ -52,6 +63,39 @@ export const signInWithUserEmailAndPassword = async (email, password) => {
 //   });
 
 export const db = getFirestore();
+
+//Add collectiions to db from js file (run it once to fill firestore)
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+  console.log(objectsToAdd);
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log("insert to db done");
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  //Map db categories
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+};
 
 export const createUserDocFromAuth = async (userAuth, additionalParams) => {
   const userDocRef = doc(db, "users", userAuth.uid);
@@ -70,10 +114,10 @@ export const createUserDocFromAuth = async (userAuth, additionalParams) => {
         displayName,
         email,
         createdAt,
-        ...additionalParams
+        ...additionalParams,
       });
     } catch (err) {
-      console.log('error while creating new user', err.message);
+      console.log("error while creating new user", err.message);
     }
 
     return userDocRef;
@@ -88,5 +132,5 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
 export const signOutUser = async () => await signOut(auth);
 
 //returns an unsubscribe function
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
-
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
