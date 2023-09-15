@@ -11,7 +11,13 @@ const Button = ({ children, buttonType, ...otherProps }) => {
       {...otherProps}
     >
       {children}
-      <div className="google-logo"><GoogleLogo /></div>
+      {buttonType === "google" ? (
+        <div className="google-logo">
+          <GoogleLogo />
+        </div>
+      ) : (
+        ""
+      )}
     </button>
   );
 };

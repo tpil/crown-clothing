@@ -2,25 +2,23 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  
+
   .title-link {
     margin-bottom: 25px;
 
     .title {
       font-size: 28px;
-      cursor: pointer;
-      text-transform: uppercase;
-
-      &:hover {
-        color: blue;
-      }
+      text-transform: capitalize;
     }
-
   }
 
   .preview {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 20px;
+  }
+
+  .show-more-btn-container {
+    margin: 20px auto;
   }
 }
