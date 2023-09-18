@@ -10,10 +10,10 @@ import CartDropDown from "../../components/cart-dropdown/cart-dropdown.component
 
 const Navigation = () => {
   const { user } = useContext(UserContext);
-  const { displayCart, setCartVisibility } = useContext(CartContext);
+  const { isCartOpen, setCartVisibility } = useContext(CartContext);
 
   const togglecart = () => {
-    setCartVisibility(!displayCart);
+    setCartVisibility(!isCartOpen);
   };
   return (
     <Fragment>
@@ -39,7 +39,7 @@ const Navigation = () => {
           <span onClick={togglecart}><CartIcon  /></span>
         </div>
       </div>
-      <div className="nav-dropdown">{displayCart && <CartDropDown />}</div>
+      <div className="nav-dropdown">{isCartOpen && <CartDropDown />}</div>
       <Outlet />
     </Fragment>
   );
