@@ -1,25 +1,25 @@
-import "./form-input.styles.scss";
+//import "./form-input.styles.scss";
+import {
+  FormGroup,
+  FormInputLabel,
+  FormInputItem,
+  FormInputErrorMsg,
+} from "./form-input.styles";
 
 const FormInput = ({ label, inputOptions, error }) => {
   return (
-    <div className="group">
-      <input className={`${error ? 'error' : ''} form-input`} {...inputOptions} />
-      {
-        //if label exists render
-        label && (
-          <label
-            className={`${
-              inputOptions.value.length ? "shrink" : ''
-            } form-input-label`}
-          >
-            {label}
-          </label>
-        )
-      }
-      {error && (
-        <span className="form-input-error-msg">{error}</span>
+    <FormGroup>
+      <FormInputItem
+        hasError ={error}
+        {...inputOptions}
+      />
+      {label && (
+        <FormInputLabel shrink={inputOptions.value.length}>
+          {label}
+        </FormInputLabel>
       )}
-    </div>
+      {error && <FormInputErrorMsg>{error}</FormInputErrorMsg>}
+    </FormGroup>
   );
 };
 

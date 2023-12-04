@@ -16,10 +16,12 @@
       height: 100%;
     }
   }
-  .name,
+  .name {
+    width: 39%;
+  }
   .quantity,
   .price {
-    width: 23%;
+    flex: 1 1 5rem;
   }
 
   .quantity {
@@ -30,7 +32,7 @@
 
       &.disabled {
         pointer-events: none;
-        opacity:.5;
+        opacity: 0.5;
       }
     }
 

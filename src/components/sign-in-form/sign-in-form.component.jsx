@@ -1,11 +1,12 @@
 import { useState } from "react";
 import {
   signInWithUserEmailAndPassword,
-  signInWithGooglePopup
+  signInWithGooglePopup,
 } from "../../utils/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import "./sign-in-form.styles.scss";
 import Button from "../button/button.components";
+import { BUTTON_TYPES } from "../button/button.components";
 
 const initialForm = {
   email: "",
@@ -18,7 +19,6 @@ const initialErrors = {
 };
 
 const SignInForm = () => {
-
   const [signinForm, setSigninForm] = useState(initialForm);
   const [errors, setErrors] = useState(initialErrors);
   const { email, password } = signinForm;
@@ -33,7 +33,6 @@ const SignInForm = () => {
   //   };
   //   fechRedirectResult();
   // }, []);
-
 
   const resetFormFields = () => {
     setSigninForm(initialForm);
@@ -70,7 +69,6 @@ const SignInForm = () => {
     }
   };
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setSigninForm({ ...signinForm, [name]: value });
@@ -105,7 +103,11 @@ const SignInForm = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Sign in</Button>
-          <Button type="button" buttonType="google" onClick={signinWithGoogle}>
+          <Button
+            type="button"
+            buttonType={BUTTON_TYPES.google}
+            onClick={signinWithGoogle}
+          >
             continue with
           </Button>
         </div>
