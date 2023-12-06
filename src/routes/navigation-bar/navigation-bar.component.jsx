@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Fragment, useContext, useRef, useEffect } from "react";
-import { UserContext } from "../../contexts/user.context";
+import { useSelector } from "react-redux";
+import { currentUser } from "../../store/user/user.selector";
 import { CartContext } from "../../contexts/cart.context";
 import { signOutUser } from "../../utils/firebase.utils";
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
@@ -17,7 +18,7 @@ import {
 } from "./navigation-bar.styles";
 
 const Navigation = () => {
-  const { user } = useContext(UserContext);
+  const user = useSelector(currentUser);
   const { displayCart, setCartVisibility } = useContext(CartContext);
 
   let cartDialogref = useRef();
@@ -26,7 +27,7 @@ const Navigation = () => {
   const togglecart = () => {
     setCartVisibility(!displayCart);
   };
-  
+
   useEffect(() => {
     const closeCartWhenClickOutside = (event) => {
       if (
@@ -39,7 +40,8 @@ const Navigation = () => {
     };
     document.addEventListener("mousedown", closeCartWhenClickOutside);
 
-    return () => document.removeEventListener("mousedown", closeCartWhenClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", closeCartWhenClickOutside);
   });
 
   return (
@@ -57,7 +59,8 @@ const Navigation = () => {
           </NavLink>
           {user ? (
             <NavLink onClick={signOutUser}>
-              SIGN OUT
+              <span>{user.displayName}</span> 
+              <span>SIGN OUT</span>
               <NavLinkBorder />
             </NavLink>
           ) : (

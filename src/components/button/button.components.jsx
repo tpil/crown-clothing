@@ -6,7 +6,7 @@ import {
   GoogleSignInBtn,
   GoogleLogoContainer,
   Logo,
-} from "./button";
+} from "./button.styles";
 
 
 export const BUTTON_TYPES = {
