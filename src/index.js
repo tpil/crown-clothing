@@ -16,12 +16,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <CategoriesProvider>
           <CartProvider>
             <ScrollToTop />
             <App />
           </CartProvider>
-        </CategoriesProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

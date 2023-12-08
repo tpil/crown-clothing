@@ -29,6 +29,18 @@ export const NavLinkBorder = styled.span`
   transition: all 0.3s;
 `;
 
+export const SignOut = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  span + span {
+    transform: translate(0, 20px);
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s 0.3s
+  }
+`;
+
 export const NavLink = styled(Link)`
   display: flex;
   flex-direction: column;
@@ -37,6 +49,14 @@ export const NavLink = styled(Link)`
   transition: all 0.5s;
   &:hover ${NavLinkBorder} {
     width: 100%;
+  }
+  &:hover ${SignOut} {
+    span {
+    opacity: 1;
+    }
+    span + span {
+      opacity: 1;
+    }
   }
 `;
 

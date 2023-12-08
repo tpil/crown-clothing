@@ -13,6 +13,7 @@ import {
   LogoContainer,
   NavLinks,
   NavLink,
+  SignOut,
   NavLinkBorder,
   NavDropdown,
 } from "./navigation-bar.styles";
@@ -59,8 +60,10 @@ const Navigation = () => {
           </NavLink>
           {user ? (
             <NavLink onClick={signOutUser}>
-              <span>{user.displayName}</span> 
-              <span>SIGN OUT</span>
+              <SignOut>
+                <span>{user.email}</span>
+                <span>SIGN OUT</span>
+              </SignOut>
               <NavLinkBorder />
             </NavLink>
           ) : (
