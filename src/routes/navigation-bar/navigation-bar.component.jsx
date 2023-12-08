@@ -1,8 +1,7 @@
 import { Outlet } from "react-router-dom";
-import { Fragment, useContext, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { Fragment, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { currentUser } from "../../store/user/user.selector";
-import { CartContext } from "../../contexts/cart.context";
 import { signOutUser } from "../../utils/firebase.utils";
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import "./navigation-bar.styles.jsx";
@@ -17,22 +16,26 @@ import {
   NavLinkBorder,
   NavDropdown,
 } from "./navigation-bar.styles";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cart.action";
 
 const Navigation = () => {
+  const dispatch = useDispatch();
+
   const user = useSelector(currentUser);
-  const { displayCart, setCartVisibility } = useContext(CartContext);
+  const isCartOpen = useSelector(selectIsCartOpen);
 
   let cartDialogref = useRef();
   let cartIconRef = useRef();
 
   const togglecart = () => {
-    setCartVisibility(!displayCart);
+    dispatch(setIsCartOpen(!isCartOpen))
   };
 
   useEffect(() => {
     const closeCartWhenClickOutside = (event) => {
       if (
-        displayCart &&
+        isCartOpen &&
         !cartDialogref.current.contains(event.target) &&
         !cartIconRef.current.contains(event.target)
       ) {
@@ -78,7 +81,7 @@ const Navigation = () => {
         </NavLinks>
       </NavigationContainer>
       <NavDropdown ref={cartDialogref}>
-        {displayCart && <CartDropDown />}
+        {isCartOpen && <CartDropDown />}
       </NavDropdown>
       <Outlet />
     </Fragment>

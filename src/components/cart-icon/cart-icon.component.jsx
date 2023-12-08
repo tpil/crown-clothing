@@ -1,9 +1,10 @@
-import { useContext } from "react";
 import { CartIconContainer, ShoppingIcon, ItemCount } from "./cart-icon.styles";
-import { CartContext } from "../../contexts/cart.context";
+import { useSelector } from "react-redux";
+import { selectCartCounter } from "../../store/cart/cart.selector";
 
 const CartIcon = () => {
-  const { cartCount } = useContext(CartContext);
+  const cartCount = useSelector(selectCartCounter);
+  
   return (
     <CartIconContainer>
       <ShoppingIcon />
